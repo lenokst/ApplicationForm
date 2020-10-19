@@ -17,7 +17,7 @@ public class ApplicationFormTest {
     }
 
     @Test
-    void SubmitValidName() {
+    void shouldCheckSubmitValidName() {
         form.$("[data-test-id=name] input").setValue("Марк Цукерберг");
         form.$("[data-test-id=phone] input").setValue("+71234567890");
         form.$("[data-test-id=agreement]").click();
@@ -25,16 +25,16 @@ public class ApplicationFormTest {
         $("[data-test-id='order-success']").shouldHave(exactText("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
     }
     @Test
-    void LatinName() {
+    void shouldCheckLatinName() {
         form.$("[data-test-id=name] input").setValue("Mark Zuckerberg");
         form.$("[data-test-id=phone] input").setValue("+71234567890");
         form.$("[data-test-id=agreement]").click();
         form.$("[type='button']").click();
-        form.$(".input_theme_alfa-on-white.input_invalid .input__sub").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
+        form.$("[data-test-id=name].input_invalid .input__sub").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
     }
 
     @Test
-    void SubmitValidNameDash() {
+    void shouldCheckSubmitValidNameDash() {
         form.$("[data-test-id=name] input").setValue("Марк Цукерберг-Цукерберг");
         form.$("[data-test-id=phone] input").setValue("+71234567890");
         form.$("[data-test-id=agreement]").click();
@@ -43,33 +43,33 @@ public class ApplicationFormTest {
     }
 
     @Test
-    void SymbolName() {
+    void shouldCheckSymbolName() {
         form.$("[data-test-id=name] input").setValue("***");
         form.$("[data-test-id=phone] input").setValue("+71234567890");
         form.$("[data-test-id=agreement]").click();
         form.$("[type='button']").click();
-        form.$(".input_theme_alfa-on-white.input_invalid .input__sub").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
+        form.$("[data-test-id=name].input_invalid .input__sub").shouldHave(exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
     }
 
     @Test
-    void EmptyPhone() {
+    void shouldCheckEmptyPhone() {
         form.$("[data-test-id=name] input").setValue("Марк Цукерберг");
         form.$("[data-test-id=agreement]").click();
         form.$("[type='button']").click();
-        form.$(".input_theme_alfa-on-white.input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
+        form.$("[data-test-id=phone].input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
     }
 
     @Test
-    void WrongPhone() {
+    void shouldCheckWrongPhone() {
         form.$("[data-test-id=name] input").setValue("Марк Цукерберг");
         form.$("[data-test-id=phone] input").setValue("+712345678901234567890");
         form.$("[data-test-id=agreement]").click();
         form.$("[type='button']").click();
-        form.$(".input_theme_alfa-on-white.input_invalid .input__sub").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
+        form.$("[data-test-id=phone].input_invalid .input__sub").shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
     @Test
-    void CheckboxNotChecked(){
+    void shouldCheckCheckboxNotChecked(){
         form.$("[data-test-id=name] input").setValue("Марк Цукерберг");
         form.$("[data-test-id=phone] input").setValue("+71234567890");
         form.$(".button").click();
@@ -77,7 +77,7 @@ public class ApplicationFormTest {
     }
 
     @Test
-    void EmptyForm() {
+    void shouldCheckEmptyForm() {
         form.$("[type='button']").click();
         form.$(".input_theme_alfa-on-white.input_invalid .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
     }
